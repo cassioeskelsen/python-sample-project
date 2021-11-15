@@ -1,0 +1,25 @@
+from fastapi import FastAPI
+from fastapi.encoders import jsonable_encoder
+
+from src.xpto.common.models.order import Order
+from src.xpto.invoices.ioc_invoices import register_ioc
+from src.xpto.invoices.services.create_invoice_service import CreateInvoiceService
+
+"""
+    Esse é um exemplo de microsserviço que é chamado via API HTTP. Usei essa forma para simplificar o exemplo,
+    mas em um sistema da vida real sugiro usar essa forma de comunicação entre microsserviços apenas em últimos
+    casos. O ideal é que, sempre que possível, utilizemos uma arquitetura baseada em eventos para diminuir o 
+    acoplamento entre os microsserviços.
+    Veja minha série de artigos "Uma Arquitetura simples e eficiente para para sistemas event-driven em Python":
+    https://eskelsen.medium.com/uma-arquitetura-simples-e-eficiente-para-sistemas-event-driven-em-python-parte-i-5eb59336d858
+"""
+
+app = FastAPI()
+register_ioc()
+
+
+@app.post("/create_invoice")
+def create_invoice(order: Order):
+    service = CreateInvoiceService()
+    invoice = service.create_from_order(order)
+    return {"invoice": jsonable_encoder(invoice)}
