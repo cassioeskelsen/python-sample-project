@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python -m src.xpto.orders.main
+uvicorn src.xpto.orders.main:app --host 0.0.0.0 --port 8000

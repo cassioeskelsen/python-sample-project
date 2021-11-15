@@ -29,7 +29,3 @@ async def create_invoice(order_id: int):
     service = CreateInvoiceService()
     invoice = service.create_from_order(order)
     return {"invoice": jsonable_encoder(invoice)}
-
-
-if __name__ == "__main__":
-    uvicorn.run("src.xpto.api.main:app", host="127.0.0.1", port=invoices_settings.http_port, log_level="info")

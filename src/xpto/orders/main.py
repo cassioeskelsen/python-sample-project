@@ -36,4 +36,4 @@ async def create_order(order: Order):
 
 
 if __name__ == "__main__":
-    uvicorn.run("src.xpto.api.main:app", host="127.0.0.1", port=orders_settings.http_port, log_level="info")
+    uvicorn.run("src.xpto.orders.main:app", host="127.0.0.1", port=orders_settings.http_port, log_level="info")
