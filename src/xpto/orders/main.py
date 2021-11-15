@@ -1,8 +1,10 @@
 import inject
+import uvicorn
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 
 from src.xpto.common.models.order import Order
+from src.xpto.orders.config.orders_settings import OrdersSettings
 from src.xpto.orders.ioc_orders import register_ioc
 from src.xpto.orders.repositories.order_repository import OrderRepository
 
@@ -16,16 +18,22 @@ from src.xpto.orders.repositories.order_repository import OrderRepository
 """
 
 app = FastAPI()
+
 register_ioc()
+orders_settings = OrdersSettings()
 
 
 @app.get("/get_order")
-def get_order(order_id: int):
+async def get_order(order_id: int):
     order = inject.instance(OrderRepository).get_order_by_id(order_id)
     return {"invoice": jsonable_encoder(order)}
 
 
 @app.post("/create_order")
-def create_order(order: Order):
+async def create_order(order: Order):
     order = inject.instance(OrderRepository).add(order)
     return {"invoice": jsonable_encoder(order)}
+
+
+if __name__ == "__main__":
+    uvicorn.run("src.xpto.api.main:app", host="127.0.0.1", port=orders_settings.http_port, log_level="info")

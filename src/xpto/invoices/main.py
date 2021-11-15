@@ -1,7 +1,9 @@
+import uvicorn
 from fastapi import FastAPI
 from fastapi.encoders import jsonable_encoder
 
 from src.xpto.common.models.order import Order
+from src.xpto.invoices.config.invoices_settings import InvoicesSettings
 from src.xpto.invoices.ioc_invoices import register_ioc
 from src.xpto.invoices.services.create_invoice_service import CreateInvoiceService
 
@@ -17,9 +19,17 @@ from src.xpto.invoices.services.create_invoice_service import CreateInvoiceServi
 app = FastAPI()
 register_ioc()
 
+invoices_settings = InvoicesSettings()
+
 
 @app.post("/create_invoice")
-def create_invoice(order: Order):
+async def create_invoice(order_id: int):
+    # busca order de alguma forma, aqui não importa, vamos inicializar um novo obj
+    order = Order(customer_name="teste123")
     service = CreateInvoiceService()
     invoice = service.create_from_order(order)
     return {"invoice": jsonable_encoder(invoice)}
+
+
+if __name__ == "__main__":
+    uvicorn.run("src.xpto.api.main:app", host="127.0.0.1", port=invoices_settings.http_port, log_level="info")
