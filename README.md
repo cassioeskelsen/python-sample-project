@@ -1,6 +1,6 @@
 ## Estruturando projetos em Python - um modelo de sistema
 
-Esse repositório contém um modelo de projeto Python descrito neste artigo do Medium:
+Esse repositório contém um modelo de projeto Python descrito [neste artigo do Medium](https://eskelsen.medium.com/estruturando-projetos-em-python-um-modelo-de-sistema-d0652d289bc)
 
 Para executar o projeto, siga os seguintes passos após clonar o projeto:
 
