@@ -23,7 +23,7 @@ build_orders_c:
 	DOCKER_BUILDKIT=1 docker image build --tag python_sample_project_orders:latest --build-arg SOURCE_FOLDER=orders --no-cache -f Dockerfile .
 
 run_orders_c:
-	docker run --name orders_container -e SOURCE_FOLDER=orders -e mongodb_conn_string=mongodb://localhost:27020/orders -e HTTP_PORT=8000 -p 8001:8000  python_sample_project_orders:latest
+	docker run --name orders_container -e SOURCE_FOLDER=orders -e mongodb_conn_string=mongodb://localhost:27020/orders -e HTTP_PORT=8001 -p 8001:8001  python_sample_project_orders:latest
 
 stop_orders_c:
 	docker rm --force orders_container
@@ -35,7 +35,7 @@ build_invoices_c:
 	DOCKER_BUILDKIT=1 docker image build --tag python_sample_project_invoices:latest --build-arg SOURCE_FOLDER=invoices --no-cache -f Dockerfile .
 
 run_invoices_c:
-	docker run --name invoices_container -e SOURCE_FOLDER=invoices -e mongodb_conn_string=mongodb://localhost:27020/invoices -e HTTP_PORT=8000 -p 8002:8000  python_sample_project_invoices:latest
+	docker run --name invoices_container -e SOURCE_FOLDER=invoices -e mongodb_conn_string=mongodb://localhost:27020/invoices -e HTTP_PORT=8002 -p 8002:8002  python_sample_project_invoices:latest
 
 stop_invoices_c:
 	docker rm --force invoices_container
